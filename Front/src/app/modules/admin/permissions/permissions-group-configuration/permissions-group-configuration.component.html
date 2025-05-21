@@ -1,0 +1,54 @@
+<div class="w-full max-w-3xl">
+    <!-- Section -->
+    <div class="w-full">
+        <div class="text-xl">
+            {{ "permissions.permissions_group_configuration" | transloco }}
+        </div>
+        <div class="text-secondary mt-2">
+            {{ "permissions.select_roles" | transloco }}
+        </div>
+    </div>
+    <div class="grid sm:grid-cols-4 gap-6 w-full mt-8">
+        <ng-container *ngFor="let role of roles">
+            <div
+                (click)="toggleRole(role)"
+                class="sm:col-span-4 flex items-center justify-between"
+            >
+                <div class="flex-auto cursor-pointer">
+                    <div class="leading-6 font-medium">
+                        {{ role.name }}
+                    </div>
+                    <div class="text-md text-secondary">
+                        {{ role.description }}
+                    </div>
+                </div>
+                <mat-slide-toggle
+                    class="ml-4"
+                    [color]="'primary'"
+                    [checked]="role.selected"
+                >
+                </mat-slide-toggle>
+            </div>
+        </ng-container>
+    </div>
+
+    <!-- Divider -->
+    <div class="my-10 border-t"></div>
+
+    <!-- Actions -->
+    <div class="flex items-center justify-end">
+        <button [routerLink]="['/']" mat-stroked-button type="button">
+            {{ "actions.cancel" | transloco }}
+        </button>
+        <button
+            [matTooltip]="'actions.save' | transloco"
+            (click)="saveChanges()"
+            class="ml-4"
+            mat-flat-button
+            type="button"
+            [color]="'primary'"
+        >
+            {{ "actions.save" | transloco }}
+        </button>
+    </div>
+</div>

@@ -1,0 +1,27 @@
+<div class="">
+    <div class="">
+        <nav aria-label="breadcrumb">
+            <ol class="flex space-x-2 text-gray-500 text-sm">
+                <li
+                    *ngFor="let item of breadcrumbItems; let last = last"
+                    class="flex items-center"
+                >
+                    <a
+                        [routerLink]="item.path"
+                        class="hover:text-gray-700 uppercase {{
+                            last ? 'font-bold text-black' : ''
+                        }}"
+                    >
+                        {{ item.name | transloco }}
+                    </a>
+                    <mat-icon
+                        *ngIf="!last"
+                        class="mx-2"
+                        style="color: currentColor"
+                        >arrow_right</mat-icon
+                    >
+                </li>
+            </ol>
+        </nav>
+    </div>
+</div>

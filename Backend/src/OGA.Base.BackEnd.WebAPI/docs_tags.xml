@@ -1,0 +1,39 @@
+﻿<docs>
+	<tags name="healthcheck">
+		<response code="200">Operación ejecutada con éxito.</response>
+		<response code="500">Se lanzará esta respuesta cuando el servidor sea incapaz de procesar la petición.</response>
+		<response code="503">Se lanzará esta respuesta cuando el servicio no esté disponible.</response>
+	</tags>
+	<tags name="getAll">
+		<response code="200">Operación ejecutada con éxito.</response>
+		<response code="401">Se lanzará esta respuesta cuando la autorización haya sido denegada.</response>
+		<response code="403">Se lanzará esta respuesta cuando el acceso al recurso esté prohibido.</response>
+		<response code="500">Se lanzará esta respuesta cuando el servidor sea incapaz de procesar la petición.</response>
+		<response code="503">Se lanzará esta respuesta cuando el servicio no esté disponible.</response>
+	</tags>
+	<tags name="getById">
+		<response code="200">Operación ejecutada con éxito.</response>
+		<response code="401">Se lanzará esta respuesta cuando la autorización haya sido denegada.</response>
+		<response code="403">Se lanzará esta respuesta cuando el acceso al recurso esté prohibido.</response>
+		<response code="404">Se lanzará esta respuesta cuando los datos de la request no hayan sido encontrados.</response>
+		<response code="500">Se lanzará esta respuesta cuando el servidor sea incapaz de procesar la petición.</response>
+		<response code="503">Se lanzará esta respuesta cuando el servicio no esté disponible.</response>
+	</tags>
+	<tags name="create">
+		<response code="200">Operación ejecutada con éxito.</response>
+		<response code="400">Se lanzará esta respuesta cuando los datos de la request no sean correctos.</response>
+		<response code="401">Se lanzará esta respuesta cuando la autorización haya sido denegada.</response>
+		<response code="403">Se lanzará esta respuesta cuando el acceso al recurso esté prohibido.</response>
+		<response code="500">Se lanzará esta respuesta cuando el servidor sea incapaz de procesar la petición.</response>
+		<response code="503">Se lanzará esta respuesta cuando el servicio no esté disponible.</response>
+	</tags>
+	<tags name="modify">
+		<response code="200">Operación ejecutada con éxito.</response>
+		<response code="400">Se lanzará esta respuesta cuando los datos de la request no sean correctos.</response>
+		<response code="401">Se lanzará esta respuesta cuando la autorización haya sido denegada.</response>
+		<response code="403">Se lanzará esta respuesta cuando el acceso al recurso esté prohibido.</response>
+		<response code="404">Se lanzará esta respuesta cuando los datos de la request no hayan sido encontrados.</response>
+		<response code="500">Se lanzará esta respuesta cuando el servidor sea incapaz de procesar la petición.</response>
+		<response code="503">Se lanzará esta respuesta cuando el servicio no esté disponible.</response>
+	</tags>
+</docs>

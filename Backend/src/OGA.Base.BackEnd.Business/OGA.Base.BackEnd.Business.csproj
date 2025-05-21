@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+	<PackageReference Include="OGA.AAS.BackEnd.Business" Version="2025.3.13.845" />
+	<PackageReference Include="OGA.Core.BackEnd.Business" Version="2025.03.13.0840" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <ProjectReference Include="..\OGA.Base.BackEnd.Application\OGA.Base.BackEnd.Application.csproj" />
+    <ProjectReference Include="..\OGA.Base.BackEnd.Infrastructure.ApiClient\OGA.Base.BackEnd.Infrastructure.ApiClient.csproj" />
+  </ItemGroup>
+	
+  <ItemGroup>
+    <Folder Include="Resources\" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,61 @@
+<!-- Loading bar -->
+<oga-loading-bar></oga-loading-bar>
+
+<!-- Navigation -->
+<oga-vertical-navigation
+    class="bg-card dark:bg-gray-900 print:hidden"
+    [appearance]="'thin'"
+    [mode]="isScreenSmall ? 'over' : 'side'"
+    [name]="'mainNavigation'"
+    [navigation]="navigation.compact"
+    [opened]="!isScreenSmall"
+>
+    <!-- Navigation footer hook -->
+    <ng-container ogaVerticalNavigationContentFooter>
+        <!-- Logo -->
+        <div
+            class="absolute bottom-10 left-0 flex justify-center items-center w-full"
+        >
+            <img
+                class="w-12"
+                src="assets/images/logo/powered_by_oga_vertical.png"
+                alt="Logo"
+            />
+        </div>
+    </ng-container>
+</oga-vertical-navigation>
+
+<!-- Wrapper -->
+<div class="flex flex-col flex-auto w-full min-w-0">
+    <!-- Header -->
+    <div
+        class="relative flex flex-0 items-center w-full h-18 px-4 md:px-6 z-49 shadow dark:shadow-none dark:border-b bg-card dark:bg-transparent print:hidden"
+    >
+        <!-- Navigation toggle button -->
+        <button class="mr-2" (click)="toggleNavigation('mainNavigation')">
+            <img
+                class="w-36"
+                src="assets/images/logo/logo-text.svg"
+                alt="Logo"
+            />
+        </button>
+
+        <div class="flex items-center translate-x-40 ml-auto mr-auto">
+            <base-breadcrumb
+                [breadcrumbItems]="breadcrumbItems"
+            ></base-breadcrumb>
+        </div>
+
+        <!-- Components -->
+        <div class="flex items-center pl-2 ml-auto">
+            <languages></languages>
+            <oga-fullscreen></oga-fullscreen>
+            <user></user>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="flex flex-col flex-auto">
+        <router-outlet *ngIf="true"></router-outlet>
+    </div>
+</div>

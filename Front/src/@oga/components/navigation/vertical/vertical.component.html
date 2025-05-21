@@ -1,0 +1,154 @@
+<div class="oga-vertical-navigation-wrapper">
+    <!-- Header -->
+    <div class="oga-vertical-navigation-header">
+        <ng-content select="[ogaVerticalNavigationHeader]"></ng-content>
+    </div>
+
+    <!-- Content -->
+    <div
+        class="oga-vertical-navigation-content"
+        ogaScrollbar
+        [ogaScrollbarOptions]="{
+            wheelPropagation: inner,
+            suppressScrollX: true
+        }"
+        #navigationContent
+    >
+        <!-- Content header -->
+        <div class="oga-vertical-navigation-content-header">
+            <ng-content
+                select="[ogaVerticalNavigationContentHeader]"
+            ></ng-content>
+        </div>
+
+        <!-- Items -->
+        <ng-container *ngFor="let item of navigation; trackBy: trackByFn">
+            <!-- Skip the hidden items -->
+            <ng-container
+                *ngIf="(item.hidden && !item.hidden(item)) || !item.hidden"
+            >
+                <!-- Aside -->
+                <ng-container *ngIf="item.type === 'aside'">
+                    <oga-vertical-navigation-aside-item
+                        [item]="item"
+                        [name]="name"
+                        [activeItemId]="activeAsideItemId"
+                        [autoCollapse]="autoCollapse"
+                        [skipChildren]="true"
+                        (click)="toggleAside(item)"
+                        (keydown)="onKeyDown($event, item)"
+                    ></oga-vertical-navigation-aside-item>
+                </ng-container>
+
+                <!-- Basic -->
+                <ng-container *ngIf="item.type === 'basic'">
+                    <oga-vertical-navigation-basic-item
+                        [item]="item"
+                        [name]="name"
+                    ></oga-vertical-navigation-basic-item>
+                </ng-container>
+
+                <!-- Collapsable -->
+                <ng-container
+                    *ngIf="item.type === 'collapsable' && appearance != 'thin'"
+                >
+                    <oga-vertical-navigation-collapsable-item
+                        [item]="item"
+                        [name]="name"
+                        [autoCollapse]="autoCollapse"
+                    ></oga-vertical-navigation-collapsable-item>
+                </ng-container>
+
+                <!-- Branch: aside, collapsable, group -->
+                <ng-container
+                    *ngIf="
+                        (item.type === 'aside' ||
+                            item.type === 'collapsable' ||
+                            item.type === 'group') &&
+                        appearance === 'thin'
+                    "
+                >
+                    <oga-horizontal-navigation-branch-item
+                        class="oga-horizontal-navigation-menu-item"
+                        [item]="item"
+                        [name]="name"
+                    ></oga-horizontal-navigation-branch-item>
+                </ng-container>
+
+                <!-- Divider -->
+                <ng-container *ngIf="item.type === 'divider'">
+                    <oga-vertical-navigation-divider-item
+                        [item]="item"
+                        [name]="name"
+                    ></oga-vertical-navigation-divider-item>
+                </ng-container>
+
+                <!-- Group -->
+                <ng-container *ngIf="item.type === 'group'">
+                    <oga-vertical-navigation-group-item
+                        [item]="item"
+                        [name]="name"
+                        [autoCollapse]="autoCollapse"
+                    ></oga-vertical-navigation-group-item>
+                </ng-container>
+
+                <!-- Spacer -->
+                <ng-container *ngIf="item.type === 'spacer'">
+                    <oga-vertical-navigation-spacer-item
+                        [item]="item"
+                        [name]="name"
+                    ></oga-vertical-navigation-spacer-item>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+
+        <!-- Content footer -->
+        <div class="oga-vertical-navigation-content-footer">
+            <ng-content
+                select="[ogaVerticalNavigationContentFooter]"
+            ></ng-content>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="oga-vertical-navigation-footer">
+        <ng-content select="[ogaVerticalNavigationFooter]"></ng-content>
+    </div>
+</div>
+
+<!-- Aside -->
+<ng-container *ngIf="activeAsideItemId">
+    <div
+        class="oga-vertical-navigation-aside-wrapper"
+        ogaScrollbar
+        [ogaScrollbarOptions]="{
+            wheelPropagation: false,
+            suppressScrollX: true
+        }"
+        [@fadeInLeft]="position === 'left'"
+        [@fadeInRight]="position === 'right'"
+        [@fadeOutLeft]="position === 'left'"
+        [@fadeOutRight]="position === 'right'"
+    >
+        <!-- Items -->
+        <ng-container *ngFor="let item of navigation; trackBy: trackByFn">
+            <!-- Skip the hidden items -->
+            <ng-container
+                *ngIf="(item.hidden && !item.hidden(item)) || !item.hidden"
+            >
+                <!-- Aside -->
+                <ng-container
+                    *ngIf="
+                        item.type === 'aside' && item.id === activeAsideItemId
+                    "
+                >
+                    <oga-vertical-navigation-aside-item
+                        [item]="item"
+                        [name]="name"
+                        [autoCollapse]="autoCollapse"
+                    ></oga-vertical-navigation-aside-item>
+                </ng-container>
+            </ng-container>
+        </ng-container>
+    </div>
+</ng-container>

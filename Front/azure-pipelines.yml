@@ -1,0 +1,91 @@
+trigger:
+  branches:
+    include:
+      - develop
+  paths:
+    exclude:
+      - azure-pipelines.yml
+
+variables:
+  - group: cd-dev
+  - name: baseUrl
+    value: $[variables.apiUrl]
+  - name: signalr
+    value: $[variables.signalrUrl]
+  - name: BuildConfiguration 
+    value: 'release'
+  - name: BuildPlatform
+    value: 'any cpu'
+  - name: systemd.debug 
+    value: 'false'
+
+stages:
+- stage: Build
+  jobs:
+  - job: CI
+    displayName: 'ci-frontend-surexport-dev'
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    # - task: NodeTool@0
+    #   displayName: 'Use Node 16.x'
+    #   inputs:
+    #     versionSpec: 16.x
+    
+    # - task: Npm@1
+    #   displayName: 'Angular CLI 14.2.1'
+    #   inputs:
+    #     command: custom
+    #     verbose: false
+    #     customCommand: 'install -g @angular/cli@14.2.1'
+
+    - task: Npm@1
+      displayName: Install
+      inputs:
+        verbose: false
+
+    - task: qetza.replacetokens.replacetokens-task.replacetokens@5
+      displayName: 'Replace tokens in environment.prod.ts'
+      inputs:
+        rootDirectory: src/environments/
+        targetFiles: environment.prod.ts
+        tokenPattern: custom
+        tokenPrefix: '###{'
+        tokenSuffix: '}###'
+
+    - task: Npm@1
+      displayName: Build
+      inputs:
+        command: custom
+        verbose: false
+        customCommand: 'run build --omit=dev'
+
+    - task: SonarQubePrepare@5
+      displayName: 'Preparar test con SonarQube'
+      inputs:
+        SonarQube: 'SC-SONARQUBE'
+        scannerMode: 'CLI'
+        configMode: 'manual'
+        cliProjectKey: 'SurExport_surexport-frontend_AYtmMvuPR10F9ggr36Ty'
+        cliSources: '$(System.DefaultWorkingDirectory)/dist/surexport-frontend/'
+      continueOnError: true
+
+    - task: SonarQubeAnalyze@5
+      displayName: 'Ejecutar análisis'
+      continueOnError: true
+
+    - task: SonarQubePublish@5
+      displayName: 'Publicar Resultados'
+      continueOnError: true
+
+    - task: ArchiveFiles@2
+      displayName: 'Archive files'
+      inputs:
+        rootFolderOrFile: $(System.DefaultWorkingDirectory)/dist/surexport-frontend/
+        includeRootFolder: false
+        archiveFile: '$(Build.ArtifactStagingDirectory)/frontend-dev.zip'
+
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish artifact: frontend'
+      inputs:
+        ArtifactName: frontend-dev

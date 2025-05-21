@@ -1,0 +1,209 @@
+<div class="w-full max-w-3xl">
+    <!-- Form -->
+    <form [formGroup]="accountForm">
+        <!-- Section -->
+        <div class="w-full">
+            <div class="text-xl">{{ "settings.profile" | transloco }}</div>
+            <div class="text-secondary mt-2">
+                {{ "settings.profile-description" | transloco }}
+            </div>
+        </div>
+        <div class="grid sm:grid-cols-4 gap-6 w-full mt-8">
+            <!-- Email -->
+            <div class="sm:col-span-4">
+                <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+                    <mat-label>{{ "user.email" | transloco }}</mat-label>
+                    <mat-icon
+                        matPrefix
+                        class="hidden sm:flex icon-size-5"
+                        [svgIcon]="'heroicons_solid:envelope'"
+                    ></mat-icon>
+                    <input
+                        matInput
+                        [formControlName]="'email'"
+                        [placeholder]="'user.email' | transloco"
+                    />
+                    <mat-error>
+                        {{ "actions.required-field" | transloco }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <!-- Phone number -->
+            <div class="sm:col-span-2">
+                <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+                    <mat-label>{{ "user.phone-number" | transloco }}</mat-label>
+                    <mat-icon
+                        matPrefix
+                        class="hidden sm:flex icon-size-5"
+                        [svgIcon]="'heroicons_solid:phone'"
+                    ></mat-icon>
+                    <input
+                        matInput
+                        [formControlName]="'phoneNumber'"
+                        [placeholder]="'user.phone-number' | transloco"
+                    />
+                    <mat-error>
+                        {{ "actions.required-field" | transloco }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <!-- Role -->
+            <div class="sm:col-span-2">
+                <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+                    <mat-label>{{ "user.role" | transloco }}</mat-label>
+                    <mat-icon
+                        matPrefix
+                        class="hidden sm:flex icon-size-5"
+                        [svgIcon]="'heroicons_solid:shield-check'"
+                    ></mat-icon>
+                    <mat-select [formControlName]="'roles'">
+                        <ng-container *ngFor="let role of roles">
+                            <mat-option [value]="role.id">
+                                {{ role.name }}
+                            </mat-option>
+                        </ng-container>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="my-10 border-t"></div>
+
+        <!-- Section -->
+        <div class="w-full">
+            <div class="text-xl">
+                {{ "settings.personal-information" | transloco }}
+            </div>
+            <div class="text-secondary mt-2">
+                {{ "settings.personal-information-description" | transloco }}
+            </div>
+        </div>
+        <div class="grid sm:grid-cols-4 gap-6 w-full mt-8">
+            <!-- Name -->
+            <div class="sm:col-span-2">
+                <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+                    <mat-label>{{ "user.name" | transloco }}</mat-label>
+                    <mat-icon
+                        matPrefix
+                        class="hidden sm:flex icon-size-5"
+                        [svgIcon]="'heroicons_solid:user-circle'"
+                    ></mat-icon>
+                    <input
+                        matInput
+                        [formControlName]="'name'"
+                        [placeholder]="'user.name' | transloco"
+                        [spellcheck]="false"
+                    />
+                    <mat-error>
+                        {{ "actions.required-field" | transloco }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <!-- Surename -->
+            <div class="sm:col-span-2">
+                <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+                    <mat-label>{{ "user.last-name" | transloco }}</mat-label>
+                    <mat-icon
+                        matPrefix
+                        class="hidden sm:flex icon-size-5"
+                        [svgIcon]="'heroicons_solid:user-circle'"
+                    ></mat-icon>
+                    <input
+                        matInput
+                        [formControlName]="'surname'"
+                        [placeholder]="'user.last-name' | transloco"
+                        [spellcheck]="false"
+                    />
+                    <mat-error>
+                        {{ "actions.required-field" | transloco }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <!--  Second surname -->
+            <div class="sm:col-span-2">
+                <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+                    <mat-label>{{
+                        "user.second-last-name" | transloco
+                    }}</mat-label>
+                    <mat-icon
+                        matPrefix
+                        class="hidden sm:flex icon-size-5"
+                        [svgIcon]="'heroicons_solid:user-circle'"
+                    ></mat-icon>
+                    <input
+                        matInput
+                        [formControlName]="'secondSurname'"
+                        [placeholder]="'user.second-last-name' | transloco"
+                        [spellcheck]="false"
+                    />
+                    <mat-error>
+                        {{ "actions.required-field" | transloco }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <!-- Identifier type -->
+            <div class="sm:col-span-2">
+                <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+                    <mat-label>{{
+                        "user.identifier-type" | transloco
+                    }}</mat-label>
+                    <mat-icon
+                        matPrefix
+                        class="hidden sm:flex icon-size-5"
+                        [svgIcon]="'heroicons_solid:clipboard-document-list'"
+                    ></mat-icon>
+                    <mat-select [formControlName]="'identifierTypeId'">
+                        <ng-container
+                            *ngFor="let identifierType of identifierTypes"
+                        >
+                            <mat-option [value]="identifierType.id">
+                                {{ identifierType.description }}
+                            </mat-option>
+                        </ng-container>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <!-- Identifier -->
+            <div class="sm:col-span-2">
+                <mat-form-field class="w-full" [subscriptSizing]="'dynamic'">
+                    <mat-label>{{ "user.identifier" | transloco }}</mat-label>
+                    <mat-icon
+                        matPrefix
+                        class="hidden sm:flex icon-size-5"
+                        [svgIcon]="'heroicons_solid:identification'"
+                    ></mat-icon>
+                    <input
+                        matInput
+                        [formControlName]="'identifier'"
+                        [placeholder]="'user.identifier' | transloco"
+                    />
+                    <mat-error>
+                        {{ "actions.required-field" | transloco }}
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <!-- Divider -->
+        <div class="mt-11 mb-10 border-t"></div>
+
+        <!-- Actions -->
+        <div class="flex items-center justify-end">
+            <button [routerLink]="['/']" mat-stroked-button type="button">
+                {{ "actions.cancel" | transloco }}
+            </button>
+            <button
+                class="ml-4"
+                mat-flat-button
+                type="button"
+                [color]="'primary'"
+                [disabled]="accountForm.invalid"
+                [matTooltip]="'actions.save' | transloco"
+                (click)="saveUser()"
+            >
+                {{ "actions.save" | transloco }}
+            </button>
+        </div>
+    </form>
+</div>

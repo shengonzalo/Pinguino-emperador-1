@@ -1,0 +1,30 @@
+<!-- Flippable card -->
+<ng-container *ngIf="flippable">
+
+    <!-- Front -->
+    <div class="oga-card-front">
+        <ng-content select="[ogaCardFront]"></ng-content>
+    </div>
+
+    <!-- Back -->
+    <div class="oga-card-back">
+        <ng-content select="[ogaCardBack]"></ng-content>
+    </div>
+
+</ng-container>
+
+<!-- Normal card -->
+<ng-container *ngIf="!flippable">
+
+    <!-- Content -->
+    <ng-content></ng-content>
+ﬂ
+    <!-- Expansion -->
+    <div
+        class="oga-card-expansion"
+        *ngIf="expanded"
+        [@expandCollapse]>
+        <ng-content select="[ogaCardExpansion]"></ng-content>
+    </div>
+
+</ng-container>

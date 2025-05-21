@@ -1,0 +1,12 @@
+<button
+    mat-icon-button
+    (click)="setScheme(config.scheme === 'dark' ? 'light' : 'dark')"
+>
+    <mat-icon
+        [svgIcon]="
+            config.scheme === 'dark'
+                ? 'heroicons_solid:sun'
+                : 'heroicons_solid:moon'
+        "
+    ></mat-icon>
+</button>

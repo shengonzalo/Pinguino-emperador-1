@@ -1,0 +1,5 @@
+{
+    "email": "###{qaEmail}###",
+    "password": "###{qaPassword}###",
+    "url": "###{frontUrl}###"
+}

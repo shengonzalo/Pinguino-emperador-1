@@ -1,0 +1,553 @@
+<div class="flex flex-col w-full">
+    <!-- View mode -->
+    <ng-container *ngIf="!editMode">
+        <!-- Header -->
+        <div
+            class="relative w-full h-40 sm:h-48 px-8 sm:px-12 bg-accent-100 dark:bg-accent-700"
+        >
+            <!-- Background -->
+            <ng-container>
+                <img
+                    class="absolute inset-0 object-cover w-full h-full"
+                    src="assets/images/covers/oga_cover3.jpg"
+                    alt="Fondo"
+                />
+            </ng-container>
+            <!-- Close button -->
+            <div
+                class="flex items-center justify-end w-full max-w-3xl mx-auto pt-6"
+            >
+                <a
+                    mat-icon-button
+                    [matTooltip]="'actions.close' | transloco"
+                    [routerLink]="['../']"
+                >
+                    <mat-icon
+                        class="text-white"
+                        [svgIcon]="'heroicons_outline:x-mark'"
+                    ></mat-icon>
+                </a>
+            </div>
+        </div>
+
+        <!-- User -->
+        <div
+            class="relative flex flex-col flex-auto items-center p-6 pt-0 sm:p-12 sm:pt-0"
+        >
+            <div class="w-full max-w-3xl">
+                <!-- Avatar and actions -->
+                <div class="flex flex-auto items-end -mt-16">
+                    <!-- Avatar -->
+                    <div
+                        class="flex items-center justify-center w-32 h-32 rounded-full overflow-hidden ring-4 ring-bg-card"
+                    >
+                        <div
+                            class="flex items-center justify-center w-full h-full rounded overflow-hidden uppercase text-6xl font-semibold leading-none bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200"
+                        >
+                            {{ user.name ? user.name.charAt(0) : ""
+                            }}{{ user.surname ? user.surname.charAt(0) : "" }}
+                        </div>
+                    </div>
+                    <!-- Actions -->
+                    <div class="flex items-center ml-auto mb-1">
+                        <button
+                            *ogaHasPermission="'base_users_edit'"
+                            mat-stroked-button
+                            (click)="toggleEditMode(true)"
+                        >
+                            <mat-icon
+                                class="icon-size-5"
+                                [svgIcon]="'heroicons_solid:pencil-square'"
+                            ></mat-icon>
+                            <span class="ml-2">{{
+                                "actions.edit" | transloco
+                            }}</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Name -->
+                <div class="mt-4 text-2xl font-semibold truncate">
+                    {{ user.name }} {{ user.surname }} {{ user.secondSurname }}
+                </div>
+
+                <div class="flex flex-col mt-4 pt-6 border-t space-y-8">
+                    <!-- Email -->
+                    <ng-container *ngIf="user.email">
+                        <div class="flex sm:items-center">
+                            <mat-icon
+                                [svgIcon]="'heroicons_outline:envelope'"
+                            ></mat-icon>
+                            <div class="ml-6 leading-6">{{ user.email }}</div>
+                        </div>
+                    </ng-container>
+
+                    <!-- Phone number -->
+                    <ng-container *ngIf="user.phoneNumber">
+                        <div class="flex sm:items-center">
+                            <mat-icon
+                                [svgIcon]="'heroicons_outline:phone'"
+                            ></mat-icon>
+                            <div class="ml-6 leading-6">
+                                {{ user.phoneNumber }}
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <!-- Identifier -->
+                    <ng-container *ngIf="user.identifier">
+                        <div class="flex sm:items-center">
+                            <mat-icon
+                                [svgIcon]="'heroicons_outline:identification'"
+                            ></mat-icon>
+                            <div class="ml-6 leading-6">
+                                {{ user.identifier }}
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <!-- Lenguague -->
+                    <ng-container *ngIf="user.languageId">
+                        <div class="flex sm:items-center">
+                            <mat-icon
+                                [svgIcon]="'heroicons_outline:globe-alt'"
+                            ></mat-icon>
+                            <div class="ml-6 leading-6" *ngIf="languages">
+                                <ng-container
+                                    *ngFor="let language of languages"
+                                >
+                                    <div
+                                        *ngIf="language.id === user.languageId"
+                                    >
+                                        {{ language.name }}
+                                    </div>
+                                </ng-container>
+                            </div>
+                        </div>
+                    </ng-container>
+
+                    <!-- Roles -->
+                    <ng-container *ngIf="user.roles">
+                        <div class="flex sm:items-center">
+                            <mat-icon
+                                [svgIcon]="'heroicons_outline:shield-check'"
+                            ></mat-icon>
+                            <div class="ml-6 leading-6">
+                                <ng-container
+                                    *ngIf="user.roles?.length; else noRoles"
+                                >
+                                    {{ user.roles[0]?.name }}
+                                </ng-container>
+                            </div>
+                        </div>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+
+    <!-- Edit mode -->
+    <ng-container *ngIf="editMode">
+        <!-- Header -->
+        <div
+            class="relative w-full h-40 sm:h-48 px-8 sm:px-12 bg-accent-100 dark:bg-accent-700"
+        >
+            <!-- Background -->
+            <ng-container>
+                <img
+                    class="absolute inset-0 object-cover w-full h-full"
+                    src="assets/images/covers/oga_cover3.jpg"
+                    alt="Fondo"
+                />
+            </ng-container>
+            <!-- Close button -->
+            <div
+                class="flex items-center justify-end w-full max-w-3xl mx-auto pt-6"
+            >
+                <a
+                    mat-icon-button
+                    [matTooltip]="'Close'"
+                    [routerLink]="['../']"
+                >
+                    <mat-icon
+                        class="text-white"
+                        [svgIcon]="'heroicons_outline:x-mark'"
+                    ></mat-icon>
+                </a>
+            </div>
+        </div>
+
+        <!-- User form -->
+        <div
+            class="relative flex flex-col flex-auto items-center px-6 sm:px-12"
+        >
+            <div class="w-full max-w-3xl">
+                <form [formGroup]="userForm">
+                    <!-- Avatar -->
+                    <div class="flex flex-auto items-end -mt-16">
+                        <div
+                            class="relative flex items-center justify-center w-32 h-32 rounded-full overflow-hidden ring-4 ring-bg-card"
+                        >
+                            <!-- Letter -->
+                            <div
+                                class="flex items-center justify-center w-full h-full rounded overflow-hidden uppercase text-6xl font-semibold leading-none bg-gray-200 text-gray-600 dark:bg-gray-700 dark:text-gray-200"
+                            >
+                                {{ user.name ? user.name.charAt(0) : ""
+                                }}{{
+                                    user.surname ? user.surname.charAt(0) : ""
+                                }}
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Name -->
+                    <div class="mt-8">
+                        <mat-form-field
+                            class="w-full"
+                            [subscriptSizing]="'dynamic'"
+                        >
+                            <mat-label>{{ "user.name" | transloco }}</mat-label>
+                            <mat-icon
+                                matPrefix
+                                class="hidden sm:flex icon-size-5"
+                                [svgIcon]="'heroicons_solid:user-circle'"
+                            ></mat-icon>
+                            <input
+                                matInput
+                                [formControlName]="'name'"
+                                [placeholder]="'user.name' | transloco"
+                                [spellcheck]="false"
+                            />
+                            <mat-error>
+                                {{ "actions.required-field" | transloco }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+
+                    <!-- Surname and secondSurname -->
+                    <div class="flex flex-wrap -mx-3 mt-8">
+                        <!-- Surename -->
+                        <div class="w-full sm:w-1/2 px-3">
+                            <mat-form-field
+                                class="w-full"
+                                [subscriptSizing]="'dynamic'"
+                            >
+                                <mat-label>{{
+                                    "user.last-name" | transloco
+                                }}</mat-label>
+                                <mat-icon
+                                    matPrefix
+                                    class="hidden sm:flex icon-size-5"
+                                    [svgIcon]="'heroicons_solid:user-circle'"
+                                ></mat-icon>
+                                <input
+                                    matInput
+                                    [formControlName]="'surname'"
+                                    [placeholder]="'user.last-name' | transloco"
+                                    [spellcheck]="false"
+                                />
+                                <mat-error>
+                                    {{ "actions.required-field" | transloco }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <!-- Second surname -->
+                        <div class="w-full sm:w-1/2 px-3">
+                            <mat-form-field
+                                class="w-full"
+                                [subscriptSizing]="'dynamic'"
+                            >
+                                <mat-label>{{
+                                    "user.second-last-name" | transloco
+                                }}</mat-label>
+                                <mat-icon
+                                    matPrefix
+                                    class="hidden sm:flex icon-size-5"
+                                    [svgIcon]="'heroicons_solid:user-circle'"
+                                ></mat-icon>
+                                <input
+                                    matInput
+                                    [formControlName]="'secondSurname'"
+                                    [placeholder]="
+                                        'user.second-last-name' | transloco
+                                    "
+                                    [spellcheck]="false"
+                                />
+                                <mat-error>
+                                    {{ "actions.required-field" | transloco }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <!-- Email and phone -->
+                    <div class="flex flex-wrap -mx-3 mt-8">
+                        <!-- Email -->
+                        <div class="w-full sm:w-1/2 px-3">
+                            <mat-form-field
+                                class="w-full"
+                                [subscriptSizing]="'dynamic'"
+                            >
+                                <mat-label>{{
+                                    "user.email" | transloco
+                                }}</mat-label>
+                                <mat-icon
+                                    matPrefix
+                                    class="hidden sm:flex icon-size-5"
+                                    [svgIcon]="'heroicons_solid:envelope'"
+                                ></mat-icon>
+                                <input
+                                    matInput
+                                    [formControlName]="'email'"
+                                    [placeholder]="'user.email' | transloco"
+                                />
+                                <mat-error>
+                                    {{ "actions.required-field" | transloco }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <!-- Phone number -->
+                        <div class="w-full sm:w-1/2 px-3">
+                            <mat-form-field
+                                class="w-full"
+                                [subscriptSizing]="'dynamic'"
+                            >
+                                <mat-label>{{
+                                    "user.phone-number" | transloco
+                                }}</mat-label>
+                                <mat-icon
+                                    matPrefix
+                                    class="hidden sm:flex icon-size-5"
+                                    [svgIcon]="'heroicons_solid:phone'"
+                                ></mat-icon>
+                                <input
+                                    matInput
+                                    [formControlName]="'phoneNumber'"
+                                    [placeholder]="
+                                        'user.phone-number' | transloco
+                                    "
+                                />
+                                <mat-error>
+                                    {{ "actions.required-field" | transloco }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <!-- Identifier type and Identifier -->
+                    <div class="flex flex-wrap -mx-3 mt-8">
+                        <!-- Identifier type -->
+                        <div class="w-full sm:w-1/2 px-3">
+                            <mat-form-field
+                                class="w-full"
+                                [subscriptSizing]="'dynamic'"
+                            >
+                                <mat-label>{{
+                                    "user.identifier-type" | transloco
+                                }}</mat-label>
+                                <mat-icon
+                                    matPrefix
+                                    class="hidden sm:flex icon-size-5"
+                                    [svgIcon]="
+                                        'heroicons_solid:clipboard-document-list'
+                                    "
+                                ></mat-icon>
+                                <mat-select
+                                    [formControlName]="'identifierTypeId'"
+                                >
+                                    <ng-container
+                                        *ngFor="
+                                            let identifierType of identifierTypes
+                                        "
+                                    >
+                                        <mat-option [value]="identifierType.id">
+                                            {{ identifierType.description }}
+                                        </mat-option>
+                                    </ng-container>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <!-- Identifier -->
+                        <div class="w-full sm:w-1/2 px-3">
+                            <mat-form-field
+                                class="w-full"
+                                [subscriptSizing]="'dynamic'"
+                            >
+                                <mat-label>{{
+                                    "user.identifier" | transloco
+                                }}</mat-label>
+                                <mat-icon
+                                    matPrefix
+                                    class="hidden sm:flex icon-size-5"
+                                    [svgIcon]="'heroicons_solid:identification'"
+                                ></mat-icon>
+                                <input
+                                    matInput
+                                    [formControlName]="'identifier'"
+                                    [placeholder]="
+                                        'user.identifier' | transloco
+                                    "
+                                />
+                                <mat-error>
+                                    {{ "actions.required-field" | transloco }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <!-- Role and language -->
+                    <div class="flex flex-wrap -mx-3 mt-8">
+                        <!-- Role -->
+                        <div class="w-full sm:w-1/2 px-3">
+                            <mat-form-field
+                                class="w-full"
+                                [subscriptSizing]="'dynamic'"
+                            >
+                                <mat-label>{{
+                                    "user.role" | transloco
+                                }}</mat-label>
+                                <mat-icon
+                                    matPrefix
+                                    class="hidden sm:flex icon-size-5"
+                                    [svgIcon]="'heroicons_solid:shield-check'"
+                                ></mat-icon>
+                                <mat-select [formControlName]="'roles'">
+                                    <ng-container *ngFor="let role of roles">
+                                        <mat-option [value]="role.id">
+                                            {{ role.name }}
+                                        </mat-option>
+                                    </ng-container>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+
+                        <!-- Language -->
+                        <div class="w-full sm:w-1/2 px-3">
+                            <mat-form-field
+                                class="w-full"
+                                [subscriptSizing]="'dynamic'"
+                            >
+                                <mat-label>{{
+                                    "user.language" | transloco
+                                }}</mat-label>
+                                <mat-icon
+                                    matPrefix
+                                    class="hidden sm:flex icon-size-5"
+                                    [svgIcon]="'heroicons_solid:globe-americas'"
+                                ></mat-icon>
+                                <mat-select [formControlName]="'languageId'">
+                                    <ng-container
+                                        *ngFor="let language of languages"
+                                    >
+                                        <mat-option [value]="language.id">
+                                            {{ language.description }}
+                                        </mat-option>
+                                    </ng-container>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <!-- Password -->
+                    <div
+                        *ngIf="user?.id === 0"
+                        class="flex flex-wrap -mx-3 mt-8"
+                    >
+                        <!-- Surename -->
+                        <div class="w-full sm:w-1/2 px-3">
+                            <mat-form-field
+                                class="w-full"
+                                [subscriptSizing]="'dynamic'"
+                            >
+                                <mat-label>{{
+                                    "user.password" | transloco
+                                }}</mat-label>
+                                <input
+                                    matInput
+                                    type="password"
+                                    autocomplete="off"
+                                    [formControlName]="'password'"
+                                    [placeholder]="'user.password' | transloco"
+                                    [spellcheck]="false"
+                                />
+                                <mat-error>
+                                    {{ "actions.required-field" | transloco }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+
+                        <!-- Second surname -->
+                        <div class="w-full sm:w-1/2 px-3">
+                            <mat-form-field
+                                class="w-full"
+                                [subscriptSizing]="'dynamic'"
+                            >
+                                <mat-label>{{
+                                    "user.confirm-password" | transloco
+                                }}</mat-label>
+                                <input
+                                    matInput
+                                    type="password"
+                                    autocomplete="off"
+                                    [formControlName]="'confirmPassword'"
+                                    [placeholder]="
+                                        'user.confirm-password' | transloco
+                                    "
+                                    [spellcheck]="false"
+                                />
+                                <mat-error>
+                                    {{ "user.password-no-match" | transloco }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div
+                        class="flex items-center mt-10 -mx-6 sm:-mx-12 py-4 pr-4 pl-1 sm:pr-12 sm:pl-7 border-t bg-gray-50 dark:bg-transparent"
+                    >
+                        <!-- Delete -->
+                        <ng-container *ngIf="user?.id !== 0">
+                            <button
+                                *ogaHasPermission="'base_users_delete'"
+                                mat-button
+                                [color]="'warn'"
+                                [matTooltip]="'actions.delete' | transloco"
+                                (click)="deleteUser()"
+                            >
+                                {{ "actions.delete" | transloco }}
+                            </button>
+                        </ng-container>
+                        <!-- Cancel -->
+                        <button
+                            class="ml-auto"
+                            mat-button
+                            [matTooltip]="'actions.cancel' | transloco"
+                            (click)="
+                                user.id !== 0
+                                    ? toggleEditMode(false)
+                                    : closeDrawer()
+                            "
+                        >
+                            {{ "actions.cancel" | transloco }}
+                        </button>
+                        <!-- Save -->
+                        <button
+                            class="ml-2"
+                            mat-flat-button
+                            [color]="'primary'"
+                            [disabled]="userForm.invalid"
+                            [matTooltip]="'actions.save' | transloco"
+                            (click)="saveUser()"
+                        >
+                            {{ "actions.save" | transloco }}
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </ng-container>
+</div>

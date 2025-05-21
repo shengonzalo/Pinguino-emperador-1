@@ -1,0 +1,225 @@
+/* Variables */
+:root {
+    --oga-vertical-navigation-thin-width: 100px;
+}
+
+oga-vertical-navigation {
+    /* Thin appearance overrides */
+    &.oga-vertical-navigation-appearance-thin {
+        width: var(--oga-vertical-navigation-thin-width);
+        min-width: var(--oga-vertical-navigation-thin-width);
+        max-width: var(--oga-vertical-navigation-thin-width);
+
+        /* Left positioned */
+        &.oga-vertical-navigation-position-left {
+            &.oga-vertical-navigation-mode-side {
+                margin-left: calc(
+                    var(--oga-vertical-navigation-thin-width) * -1
+                );
+            }
+
+            &.oga-vertical-navigation-opened {
+                margin-left: 0;
+            }
+        }
+
+        /* Right positioned */
+        &.oga-vertical-navigation-position-right {
+            &.oga-vertical-navigation-mode-side {
+                margin-right: calc(
+                    var(--oga-vertical-navigation-thin-width) * -1
+                );
+            }
+
+            &.oga-vertical-navigation-opened {
+                margin-right: 0;
+            }
+
+            .oga-vertical-navigation-aside-wrapper {
+                left: auto;
+                right: var(--oga-vertical-navigation-thin-width);
+            }
+        }
+
+        /* Wrapper */
+        .oga-vertical-navigation-wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 100%;
+            padding-top: 4.5rem;
+
+            /* Content */
+            .oga-vertical-navigation-content {
+                flex-direction: row !important;
+                align-items: center !important;
+                justify-content: flex-start;
+                flex-grow: 1;
+
+                > oga-vertical-navigation-aside-item,
+                > oga-vertical-navigation-basic-item {
+                    flex-direction: column;
+                    justify-content: flex-start;
+                    height: 64px;
+                    min-height: 64px;
+                    max-height: 64px;
+                    padding: 0 16px;
+
+                    .oga-vertical-navigation-item-wrapper {
+                        display: flex;
+                        align-items: flex-start;
+                        justify-content: flex-start;
+
+                        .oga-vertical-navigation-item {
+                            justify-content: flex-start;
+                            padding: 12px;
+                            border-radius: 4px;
+
+                            .oga-vertical-navigation-item-icon {
+                                margin: 0;
+                                opacity: 1 !important;
+                            }
+
+                            .oga-vertical-navigation-item-arrow,
+                            .oga-vertical-navigation-item-badge-content,
+                            .oga-vertical-navigation-item-title-wrapper {
+                                display: none;
+                            }
+                        }
+                    }
+                }
+
+                > oga-vertical-navigation-collapsable-item {
+                    .oga-vertical-navigation-item-arrow,
+                    .oga-vertical-navigation-item-badge-content,
+                    .oga-vertical-navigation-item-title-wrapper {
+                        display: none;
+                    }
+                }
+
+                > oga-vertical-navigation-group-item {
+                    > .oga-vertical-navigation-item-wrapper {
+                        .oga-vertical-navigation-item-arrow,
+                        .oga-vertical-navigation-item-badge-content,
+                        .oga-vertical-navigation-item-title-wrapper {
+                            display: none;
+                        }
+                    }
+                }
+
+                oga-horizontal-navigation-branch-item {
+                    .mat-mdc-menu-trigger {
+                        display: flex;
+                        flex-direction: column;
+                        justify-content: flex-start;
+                        height: 64px;
+                        min-height: 64px;
+                        max-height: 64px;
+                        padding: 0 16px !important;
+                        margin: 0 0 4px 0;
+                    }
+
+                    @screen sm {
+                        &:hover {
+                            .oga-horizontal-navigation-item-wrapper {
+                                display: flex;
+                                align-items: flex-start;
+                                justify-content: flex-start;
+                                margin: 0 12px;
+                                .oga-horizontal-navigation-item {
+                                    @apply bg-hover;
+                                }
+                                .oga-horizontal-navigation-item-arrow,
+                                .oga-horizontal-navigation-item-badge-content,
+                                .oga-horizontal-navigation-item-title-wrapper {
+                                    display: none;
+                                }
+                            }
+                        }
+                    }
+
+                    .oga-horizontal-navigation-item-wrapper {
+                        display: flex;
+                        align-items: flex-start;
+                        justify-content: flex-start;
+                        margin: 0 12px;
+
+                        .oga-horizontal-navigation-item {
+                            justify-content: flex-start;
+                            cursor: pointer;
+                            user-select: none;
+                            max-height: 48px;
+                            padding: 12px;
+                            color: currentColor;
+                            border-radius: 100% !important;
+
+                            .oga-horizontal-navigation-item-icon {
+                                margin: 0;
+                                opacity: 1 !important;
+                                color: currentColor;
+                            }
+
+                            .oga-horizontal-navigation-item-arrow,
+                            .oga-horizontal-navigation-item-badge-content,
+                            .oga-horizontal-navigation-item-title-wrapper {
+                                display: none;
+                            }
+                        }
+                    }
+                }
+
+                oga-horizontal-navigation-branch-item {
+                    .oga-horizontal-navigation-menu-active,
+                    .oga-horizontal-navigation-menu-active-forced {
+                        .oga-horizontal-navigation-item-wrapper {
+                            .oga-horizontal-navigation-item {
+                                @apply bg-hover;
+                                border-radius: 100% !important;
+                            }
+                        }
+                    }
+                }
+            }
+
+            /* Logo */
+            .oga-vertical-navigation-logo {
+                align-self: center;
+                margin-bottom: 16px;
+            }
+        }
+
+        /* Aside wrapper */
+        .oga-vertical-navigation-aside-wrapper {
+            left: var(--oga-vertical-navigation-thin-width);
+        }
+    }
+}
+
+.oga-horizontal-navigation-menu-panel.mat-mdc-menu-panel {
+    margin-left: 85px !important;
+    transform: translateY(-60px) !important;
+}
+
+.mat-mdc-menu-content {
+    display: flex;
+    flex-direction: column;
+    color: currentColor !important;
+    .mat-mdc-menu-item {
+        .oga-horizontal-navigation-item-wrapper {
+            display: flex;
+            color: currentColor !important;
+
+            .mat-mdc-tooltip-trigger {
+                display: flex;
+                color: currentColor !important;
+            }
+
+            .oga-horizontal-navigation-item {
+                color: currentColor !important;
+                .oga-horizontal-navigation-item-icon {
+                    color: currentColor;
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,156 @@
+<div
+    class="flex flex-col sm:flex-row items-center md:items-start sm:justify-center md:justify-start flex-auto min-w-0"
+>
+    <div
+        class="relative hidden md:flex flex-auto items-center justify-center h-full p-16 lg:px-28 overflow-hidden bg-[url('../assets/images/background.png')] bg-cover bg-center dark:border-r"
+    ></div>
+    <div
+        class="flex flex-col justify-between items-start w-full sm:w-auto md:h-full py-8 px-4 sm:p-12 md:p-16 md:pt-24 sm:rounded-2xl md:rounded-none sm:shadow md:shadow-none sm:bg-card"
+    >
+        <div class="w-full max-w-80 sm:w-80 mx-auto sm:mx-0">
+            <!-- Logo -->
+            <div class="w-64">
+                <img
+                    src="assets/images/logo/logo-text.svg"
+                    class="w-full"
+                    alt="Logo image"
+                />
+            </div>
+
+            <!-- Title -->
+            <div class="flex items-baseline mt-4 font-medium">
+                <div>{{ "sign-in.subtitle" | transloco }}</div>
+            </div>
+
+            <!-- Alert -->
+            <oga-alert
+                class="mt-8"
+                *ngIf="showAlert"
+                [appearance]="'outline'"
+                [showIcon]="false"
+                [type]="alert.type"
+                [@shake]="alert.type === 'error'"
+            >
+                {{ alert.message }}
+            </oga-alert>
+
+            <!-- Sign in form -->
+            <form class="mt-8" [formGroup]="signInForm" #signInNgForm="ngForm">
+                <!-- Email field -->
+                <mat-form-field class="w-full">
+                    <mat-label>{{ "sign-in.email" | transloco }}</mat-label>
+                    <input
+                        id="email"
+                        data-cy="input-email"
+                        matInput
+                        [formControlName]="'email'"
+                    />
+                    <mat-error
+                        *ngIf="signInForm.get('email').hasError('required')"
+                    >
+                        {{ "sign-in.email-required" | transloco }}
+                    </mat-error>
+                    <mat-error
+                        *ngIf="signInForm.get('email').hasError('email')"
+                    >
+                        {{ "sign-in.invalid-email" | transloco }}
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Password field -->
+                <mat-form-field class="w-full">
+                    <mat-label>{{ "sign-in.password" | transloco }}</mat-label>
+                    <input
+                        id="password"
+                        data-cy="input-pass"
+                        matInput
+                        type="password"
+                        [formControlName]="'password'"
+                        #passwordField
+                    />
+                    <button
+                        mat-icon-button
+                        type="button"
+                        (click)="
+                            passwordField.type === 'password'
+                                ? (passwordField.type = 'text')
+                                : (passwordField.type = 'password')
+                        "
+                        matSuffix
+                    >
+                        <mat-icon
+                            class="icon-size-5"
+                            *ngIf="passwordField.type === 'password'"
+                            [svgIcon]="'heroicons_solid:eye'"
+                        ></mat-icon>
+                        <mat-icon
+                            class="icon-size-5"
+                            *ngIf="passwordField.type === 'text'"
+                            [svgIcon]="'heroicons_solid:eye-slash'"
+                        ></mat-icon>
+                    </button>
+                    <mat-error>
+                        {{ "sign-in.password-required" | transloco }}
+                    </mat-error>
+                </mat-form-field>
+
+                <!-- Actions -->
+                <div
+                    class="inline-flex items-center justify-between w-full mt-1.5"
+                >
+                    <mat-checkbox
+                        class="-ml-2"
+                        [color]="'primary'"
+                        [formControlName]="'rememberMe'"
+                    >
+                        {{ "sign-in.remember-me" | transloco }}
+                    </mat-checkbox>
+                </div>
+
+                <!-- Submit button -->
+                <button
+                    data-cy="btn-submit"
+                    class="oga-mat-button-large w-full mt-6"
+                    mat-flat-button
+                    [color]="'primary'"
+                    [disabled]="signInForm.disabled"
+                    (click)="signIn()"
+                >
+                    <span *ngIf="!signInForm.disabled">
+                        {{ "sign-in.sign-in" | transloco }}
+                    </span>
+                    <mat-progress-spinner
+                        *ngIf="signInForm.disabled"
+                        [diameter]="24"
+                        [mode]="'indeterminate'"
+                    ></mat-progress-spinner>
+                </button>
+            </form>
+
+            <!-- Text for alternate login methods -->
+            <div *ngIf="microsoftAuthEnabled" class="text-center mb-4 mt-6">
+                <p>{{ "sign-in.continue" | transloco }}</p>
+            </div>
+
+            <!-- Button to switch to MSAL login method -->
+            <button
+                *ngIf="microsoftAuthEnabled"
+                class="oga-mat-button-large w-full"
+                [disabled]="isSigningInWithMicrosoft"
+                mat-stroked-button
+                [color]="'primary'"
+                (click)="signInMSAL()"
+            >
+                <mat-icon svgIcon="microsoft" class="w-10"></mat-icon>
+                <span>{{ "sign-in.microsoft" | transloco }}</span>
+            </button>
+        </div>
+        <div class="flex justify-center w-full">
+            <img
+                src="assets/images/logo/OGA_Logo vert.png"
+                class="w-28 mt-4"
+                alt="Logo image"
+            />
+        </div>
+    </div>
+</div>
