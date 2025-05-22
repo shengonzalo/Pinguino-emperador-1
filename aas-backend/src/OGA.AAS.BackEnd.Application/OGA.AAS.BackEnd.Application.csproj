@@ -1,0 +1,60 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <None Include="..\..\LICENSE.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\oga.png">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Include="..\..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+	
+  <ItemGroup>
+    <ProjectReference Include="..\OGA.AAS.BackEnd.Domain\OGA.AAS.BackEnd.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>	
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.11.0" />
+    <PackageReference Include="OGA.Core.BackEnd.Application" Version="2025.5.14.1203" />
+    <PackageReference Include="OGA.Core.BackEnd.Domain" Version="2025.5.9.1155" />
+    <PackageReference Include="OGA.Core.BackEnd.Infrastructure.Logging" Version="2025.01.27.1430" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="7.1.0" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFrameworks>net6.0;net8.0</TargetFrameworks>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+	<AssemblyVersion>2025.05.14.1203</AssemblyVersion>
+	<Version>$(AssemblyVersion)</Version>
+	<Title>OGA.AAS.BackEnd.Application</Title>
+	<Authors>oga.ai</Authors>
+	<Product>OGA.AAS</Product>
+	<PackageProjectUrl>https://www.oga.ai/</PackageProjectUrl>
+	<PackageIcon>oga.png</PackageIcon>
+	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<Description>Provides essential components for OGA handling mediation, performing efficient mappings, and implementing the CQRS (Command Query Responsibility Segregation) pattern, facilitating a clean and scalable architecture within your applications.</Description>
+	<RepositoryUrl>https://qositvisualstudio.visualstudio.com/SurExport/_artifacts/feed/OGA.Core.Nugets</RepositoryUrl>
+	<PackageLicenseFile>LICENSE.md</PackageLicenseFile>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net6.0'">
+	<TargetFrameworkMoniker>.NETCoreApp,Version=v6.0</TargetFrameworkMoniker>
+	<NuGetTargetMoniker>net6.0</NuGetTargetMoniker>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net8.0'">
+	<TargetFrameworkMoniker>.NETCoreApp,Version=v8.0</TargetFrameworkMoniker>
+	<NuGetTargetMoniker>net8.0</NuGetTargetMoniker>
+  </PropertyGroup>
+
+</Project>
