@@ -1,0 +1,8 @@
+.git
+.vs
+.gitignore
+/bin
+/obj
+/docs
+*.zip
+*.md
